@@ -301,7 +301,7 @@ with col3:
 # Botón para descargar Excel con datos filtrados
 def to_excel(df):
     output = BytesIO()
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    writer = pd.ExcelWriter(output, engine='openpyxl')
     
     # Eliminamos la columna que no quieres exportar
     df_export = df.drop(columns=['Enfermedades Detectadas', 'Posibles Enfermedades Detectadas'], errors='ignore')
