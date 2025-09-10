@@ -256,11 +256,19 @@ elif ordenar_opciones == "Edad descendente":
 col1, col2, col3 = st.columns([1,4,2])
 
 with col1:
+    import requests
+    from io import BytesIO
+    from PIL import Image
+
+    raw_url = "https://raw.githubusercontent.com/yyangs21/A3eC0Mc0mB3x_Yy/master/Asecom.png"
     try:
-        logo_img = Image.open("Logo.png")
+        resp = requests.get(raw_url, timeout=10)
+        resp.raise_for_status()
+        logo_img = Image.open(BytesIO(resp.content))
         st.image(logo_img, width=360)
     except Exception as e:
-        st.error(f"No se pudo cargar el logo: {e}")
+        st.error(f"⚠️ No se pudo cargar el logo desde GitHub: {e}")
+
 
 with col2:
     st.title("🩺 Dashboard Clínico Multietiqueta")
