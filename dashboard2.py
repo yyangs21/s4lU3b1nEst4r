@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 from io import BytesIO
 from PIL import Image
-
+import openpyxl 
 st.set_page_config(page_title="Dashboard Clínico Multietiqueta", layout="wide")
 
 css = """
@@ -90,24 +90,29 @@ td {
 """
 st.markdown(css, unsafe_allow_html=True)
 
+import streamlit as st
+import pandas as pd
+
 # --- RUTAS FIJAS (ajusta a tu entorno) ---
 RUTA_RESULTADOS = "Pacientes_por_enfermedad.xlsx"
 RUTA_BASE = "BA.xlsx"
 RUTA_RECOMENDACIONES = "resultados_BA.xlsx"
 
+# --- Función para cargar un archivo Excel ---
 @st.cache_data(show_spinner=True)
 def cargar_datos(ruta):
     try:
-        df = pd.read_excel(ruta)
+        df = pd.read_excel(ruta, engine="openpyxl")  # <-- engine agregado
         return df
     except Exception as e:
         st.error(f"No se pudo cargar el archivo {ruta}: {e}")
         return None
 
+# --- Función para leer todas las hojas y extraer recomendaciones ---
 @st.cache_data(show_spinner=True)
 def cargar_hojas_resultados(ruta):
     try:
-        hojas = pd.read_excel(ruta, sheet_name=None)
+        hojas = pd.read_excel(ruta, sheet_name=None, engine="openpyxl")  # <-- engine agregado
         hoja_pacientes = hojas.get("Pacientes")
         recomendaciones = {
             hoja: df[['CÓDIGO', 'COLABORADOR', 'Recomendaciones']]
@@ -119,6 +124,7 @@ def cargar_hojas_resultados(ruta):
         st.error(f"No se pudo leer el archivo {ruta}: {e}")
         return None, {}
 
+# --- Cargar datos ---
 df_base = cargar_datos(RUTA_BASE)
 df_enfermedades = cargar_datos(RUTA_RESULTADOS)
 df_pacientes_reco, dict_recomendaciones = cargar_hojas_resultados(RUTA_RECOMENDACIONES)
