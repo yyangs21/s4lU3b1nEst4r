@@ -91,9 +91,9 @@ td {
 st.markdown(css, unsafe_allow_html=True)
 
 # --- RUTAS FIJAS (ajusta a tu entorno) ---
-RUTA_RESULTADOS = r"C:\Users\yyang\Pacientes_por_enfermedad.xlsx"
-RUTA_BASE = r"C:\Users\yyang\Downloads\BA.xlsx"
-RUTA_RECOMENDACIONES = r"C:\Users\yyang\resultados_BA.xlsx"
+RUTA_RESULTADOS = "Pacientes_por_enfermedad.xlsx"
+RUTA_BASE = "BA.xlsx"
+RUTA_RECOMENDACIONES = "resultados_BA.xlsx"
 
 @st.cache_data(show_spinner=True)
 def cargar_datos(ruta):
