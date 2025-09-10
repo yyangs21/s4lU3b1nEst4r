@@ -266,7 +266,7 @@ with col1:
     from io import BytesIO
     from PIL import Image
 
-    raw_url = "https://github.com/s4lU3b1nEst4r/mi-repo/blob/main/Logo.png"
+    raw_url = "https://raw.githubusercontent.com/yyangs21/s4lU3b1nEst4r/master/Logo.png"
     try:
         resp = requests.get(raw_url, timeout=10)
         resp.raise_for_status()
